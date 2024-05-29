@@ -1,0 +1,11 @@
+@import "./../../styles.scss";
+
+.input-field-box{
+  padding-top: 20px !important;
+  @include dFlex($g: 16px, $ai: start);
+  flex-direction: column;
+}
+
+.name-box, .adress-box{
+  @include dFlex($g: 16px);
+}
