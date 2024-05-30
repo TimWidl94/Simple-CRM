@@ -1,5 +1,26 @@
-.add-user-btn{
+.add-user-btn {
   position: absolute;
   bottom: 56px;
   right: 56px;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  > tr {
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    &:first-child {
+      border-bottom: 2px solid rgb(0, 0, 0, 0.5);
+      color: rgb(194, 191, 191);
+      font-size: 16px;
+    }
+    &:hover:not(:first-child) {
+      background-color: rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+    }
+
+    > th {
+      height: 48px;
+    }
+  }
 }

@@ -1,7 +1,31 @@
-<p>user works!</p>
+<mat-card>
+  <table class="user-table">
+    <tr>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Street</th>
+      <th>ZipCode</th>
+      <th>City</th>
+    </tr>
+    <tr *ngFor="let user of this.firebaseService.users">
+      <th>{{ user.firstName}}</th>
+      <th>{{ user.lastName}}</th>
+      <th>{{ user.street}}</th>
+      <th>{{ user.zipCode}}</th>
+      <th>{{ user.city}}</th>
+    </tr>
+
+  </table>
+</mat-card>
 
 <div class="add-user-btn">
-  <button mat-fab  aria-label="addUserIcon" matTooltip="add User" [matTooltipPosition]="'above'" (click)="openDialog()">
+  <button
+    mat-fab
+    aria-label="addUserIcon"
+    matTooltip="add User"
+    [matTooltipPosition]="'above'"
+    (click)="openDialog()"
+  >
     <mat-icon>person_add</mat-icon>
   </button>
 </div>

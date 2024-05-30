@@ -1,8 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, Injectable, inject } from '@angular/core';
 import { Firestore, query } from '@angular/fire/firestore';
-import { initializeApp } from 'firebase/app';
 import { User } from '../../../models/user.class';
 import { addDoc, collection, onSnapshot } from 'firebase/firestore';
+
+@Injectable({
+  providedIn: 'root',
+})
 
 @Component({
   selector: 'app-firebase-service',
@@ -11,10 +14,11 @@ import { addDoc, collection, onSnapshot } from 'firebase/firestore';
   templateUrl: './firebase-service.component.html',
   styleUrl: './firebase-service.component.scss',
 })
-export class FirebaseServiceComponent {
+export class FirebaseServiceComponent{
   firestore: Firestore = inject(Firestore);
-  user: User[] = [];
+  public users: User[] = [];
   unsubUser;
+
 
   constructor() {
     this.unsubUser = this.subUserList();
@@ -50,10 +54,11 @@ export class FirebaseServiceComponent {
   subUserList() {
     const q = query(this.getUserRef());
     return onSnapshot(q, (list) => {
-      this.user = [];
+      this.users = [];
       list.forEach((element) => {
-        this.user.push(this.setUserObject(element.data(), element.id));
+        this.users.push(this.setUserObject(element.data(), element.id));
       });
+      console.log(this.users)
     });
   }
 
