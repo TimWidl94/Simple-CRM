@@ -1,3 +1,4 @@
+import { FirebaseServiceComponent } from './../shared/firebase-service/firebase-service.component';
 import { Component } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,7 +24,7 @@ import { FormsModule } from '@angular/forms';
     MatNativeDateModule,
     FormsModule,
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(), FirebaseServiceComponent],
   templateUrl: './dialog-add-user.component.html',
   styleUrl: './dialog-add-user.component.scss',
 })
@@ -31,13 +32,14 @@ export class DialogAddUserComponent {
   user = new User();
   birthDate!: Date;
 
-  constructor() {
-    // this.birthDate = new Date();
+  constructor(private firebaseService: FirebaseServiceComponent) {
   }
 
   saveUser() {
-    if(this.birthDate){
-    this.user.birthDate = this.birthDate.getTime();}
+    if (this.birthDate) {
+      this.user.birthDate = this.birthDate.getTime();
+    }
+    this.firebaseService.addUser(this.firebaseService.setUserObject(this.user, this.user.id), "user")
     console.log('user', this.user);
   }
 }
