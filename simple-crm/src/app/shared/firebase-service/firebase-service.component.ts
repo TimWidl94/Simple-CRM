@@ -1,7 +1,7 @@
 import { Component, Injectable, inject } from '@angular/core';
 import { Firestore, query } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
-import { addDoc, collection, onSnapshot } from 'firebase/firestore';
+import { addDoc, collection, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +30,7 @@ export class FirebaseServiceComponent {
     return {
       firstName: user.firstName,
       lastName: user.lastName,
+      email: user.email,
       birthDate: user.birthDate,
       street: user.street,
       zipCode: user.zipCode,
@@ -74,6 +75,21 @@ export class FirebaseServiceComponent {
         .then((docRef) => {
           console.log('Document written with ID: ', docRef);
         });
+    }
+  }
+
+  getSingleUserRef(colId: string, userId: string){
+    return doc(collection(this.firestore, colId), userId)
+  }
+
+  async getUserJsonFromId(user: User){
+    if (user.id) {
+      let docRef = this.getSingleUserRef('user', user.id);
+      await updateDoc(docRef, this.getUserJson(user))
+        .catch((err) => {
+          console.log(err);
+        })
+        .then(() => {});
     }
   }
 }

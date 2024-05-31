@@ -1,12 +1,12 @@
 <div>
-  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
   <h2 mat-dialog-title>Add User</h2>
   <mat-dialog-content class="input-field-box">
     <div class="name-box">
       <mat-form-field appearance="outline">
         <mat-label>First Name</mat-label>
         <input
-          [disabled]="loading"
+
           [(ngModel)]="user.firstName"
           matInput
           placeholder="First Name"
@@ -16,7 +16,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Last Name</mat-label>
         <input
-          [disabled]="loading"
+
           [(ngModel)]="user.lastName"
           matInput
           placeholder="First Name"
@@ -28,7 +28,7 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Email</mat-label>
         <input
-          [disabled]="loading"
+
           [(ngModel)]="user.email"
           matInput
           placeholder="email"
@@ -41,7 +41,7 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Birth Date</mat-label>
         <input
-          [disabled]="loading"
+
           [(ngModel)]="user.birthDate"
           matInput
           placeholder="Birthdate"
@@ -59,7 +59,7 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Street + House No.</mat-label>
         <input
-          [disabled]="loading"
+
           [(ngModel)]="user.street"
           matInput
           placeholder="Street + House No."
@@ -71,7 +71,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Zip code</mat-label>
         <input
-          [disabled]="loading"
+
           [(ngModel)]="user.zipCode"
           matInput
           placeholder="Zip code"
@@ -81,7 +81,7 @@
       <mat-form-field appearance="outline">
         <mat-label>City</mat-label>
         <input
-          [disabled]="loading"
+
           [(ngModel)]="user.city"
           matInput
           placeholder="City"
@@ -92,7 +92,7 @@
   </mat-dialog-content>
   <mat-dialog-actions>
     <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button mat-dialog-close cdkFocusInitial (click)="saveUser()">
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="editUser()">
       Save
     </button>
   </mat-dialog-actions>
