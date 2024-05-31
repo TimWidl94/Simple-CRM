@@ -6,7 +6,6 @@ import { addDoc, collection, onSnapshot } from 'firebase/firestore';
 @Injectable({
   providedIn: 'root',
 })
-
 @Component({
   selector: 'app-firebase-service',
   standalone: true,
@@ -14,11 +13,10 @@ import { addDoc, collection, onSnapshot } from 'firebase/firestore';
   templateUrl: './firebase-service.component.html',
   styleUrl: './firebase-service.component.scss',
 })
-export class FirebaseServiceComponent{
+export class FirebaseServiceComponent {
   firestore: Firestore = inject(Firestore);
   public users: User[] = [];
   unsubUser;
-
 
   constructor() {
     this.unsubUser = this.subUserList();
@@ -44,6 +42,7 @@ export class FirebaseServiceComponent{
       id: id || '',
       firstName: obj.firstName || '',
       lastName: obj.lastName || '',
+      email: obj.email || '',
       birthDate: obj.birthDate || '',
       street: obj.street || '',
       zipCode: obj.zipCode || '',
@@ -58,7 +57,7 @@ export class FirebaseServiceComponent{
       list.forEach((element) => {
         this.users.push(this.setUserObject(element.data(), element.id));
       });
-      console.log(this.users)
+      console.log(this.users);
     });
   }
 
@@ -66,16 +65,15 @@ export class FirebaseServiceComponent{
     return collection(this.firestore, 'user');
   }
 
-
-  async addUser(user: User, colId: "user"){
-    if(colId == 'user'){
+  async addUser(user: User, colId: 'user') {
+    if (colId == 'user') {
       await addDoc(this.getUserRef(), user)
-      .catch((err) => {
-        console.error(err);
-      })
-      .then((docRef) => {
-        console.log('Document written with ID: ', docRef);
-      });
+        .catch((err) => {
+          console.error(err);
+        })
+        .then((docRef) => {
+          console.log('Document written with ID: ', docRef);
+        });
     }
   }
 }

@@ -2,15 +2,17 @@ export class User {
   id: string;
   firstName: string;
   lastName: string;
+  email: string;
   birthDate: number;
   street: string;
   zipCode: number;
   city: string;
 
-  constructor (obj?: any) {
-    this.id = obj ? obj.id: '';
+  constructor(obj?: any) {
+    this.id = obj ? obj.id : '';
     this.firstName = obj ? obj.firstName : '';
     this.lastName = obj ? obj.LastName : '';
+    this.email = obj ? obj.email : '';
     this.birthDate = obj ? obj.birthDate : '';
     this.street = obj ? obj.street : '';
     this.zipCode = obj ? obj.zipCode : '';

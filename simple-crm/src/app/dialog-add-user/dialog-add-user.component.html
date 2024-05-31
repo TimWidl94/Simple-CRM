@@ -26,6 +26,19 @@
     </div>
     <div class="full-width">
       <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input
+          [disabled]="loading"
+          [(ngModel)]="user.email"
+          matInput
+          placeholder="email"
+        />
+        <!-- <mat-hint>Please enter a name</mat-hint> -->
+        <!-- <mat-hint>Please enter a date</mat-hint> -->
+      </mat-form-field>
+    </div>
+    <div class="full-width">
+      <mat-form-field appearance="outline" class="full-width">
         <mat-label>Birth Date</mat-label>
         <input
           [disabled]="loading"

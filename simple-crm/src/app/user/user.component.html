@@ -3,18 +3,19 @@
     <tr>
       <th>Firstname</th>
       <th>Lastname</th>
+      <th>Email</th>
       <th>Street</th>
       <th>ZipCode</th>
       <th>City</th>
     </tr>
-    <tr *ngFor="let user of this.firebaseService.users">
-      <th>{{ user.firstName}}</th>
-      <th>{{ user.lastName}}</th>
-      <th>{{ user.street}}</th>
-      <th>{{ user.zipCode}}</th>
-      <th>{{ user.city}}</th>
+    <tr *ngFor="let user of this.firebaseService.users" [routerLink]="['/user/' + user.id]" routerLinkActive="router-link-active" >
+      <th>{{ user.firstName }}</th>
+      <th>{{ user.lastName }}</th>
+      <th>{{ user.email }}</th>
+      <th>{{ user.street }}</th>
+      <th>{{ user.zipCode }}</th>
+      <th>{{ user.city }}</th>
     </tr>
-
   </table>
 </mat-card>
 
