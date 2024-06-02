@@ -92,4 +92,15 @@ export class FirebaseServiceComponent {
         .then(() => {});
     }
   }
+
+  async updateUser(user: User, userId: string) {
+    if (userId) {
+      let docRef = this.getSingleUserRef('user', userId);
+      await updateDoc(docRef, this.getUserJson(user))
+        .catch((err) => {
+          console.log(err);
+        })
+        .then(() => {});
+    }
+  }
 }

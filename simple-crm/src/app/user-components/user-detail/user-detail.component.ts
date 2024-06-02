@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute } from '@angular/router';
-import { FirebaseServiceComponent } from '../shared/firebase-service/firebase-service.component';
+import { FirebaseServiceComponent } from '../../shared/firebase-service/firebase-service.component';
 import { onSnapshot } from 'firebase/firestore';
-import { User } from '../../models/user.class';
+import { User } from '../../../models/user.class';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
@@ -42,6 +42,8 @@ export class UserDetailComponent implements OnInit {
   }
 
   editMenu(){
-    this.dialog.open(DialogEditComponent);
+   const dialog =  this.dialog.open(DialogEditComponent); //* Zuweisung des Users in die neue Componente *//
+   dialog.componentInstance.user = new User(this.firebaseService.getUserJson(this.user));
+   dialog.componentInstance.userId = this.userId;
   }
 }

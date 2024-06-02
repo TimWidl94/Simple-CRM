@@ -1,4 +1,4 @@
-import { FirebaseServiceComponent } from './../shared/firebase-service/firebase-service.component';
+import { FirebaseServiceComponent } from '../../shared/firebase-service/firebase-service.component';
 import { Component } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,7 +9,7 @@ import {
   MatNativeDateModule,
   provideNativeDateAdapter,
 } from '@angular/material/core';
-import { User } from '../../models/user.class';
+import { User } from '../../../models/user.class';
 import { FormsModule } from '@angular/forms';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';

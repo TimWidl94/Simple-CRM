@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogModule } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,9 +9,11 @@ import {
   provideNativeDateAdapter,
 } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
-import { User } from '../../models/user.class';
+import { User } from '../../../models/user.class';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
+import { FirebaseServiceComponent } from '../../shared/firebase-service/firebase-service.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-edit',
@@ -27,19 +29,24 @@ import { CommonModule } from '@angular/common';
     MatProgressBarModule,
     CommonModule,
   ],
+  providers: [FirebaseServiceComponent],
   templateUrl: './dialog-edit.component.html',
   styleUrl: './dialog-edit.component.scss',
 })
-export class DialogEditComponent {
+export class DialogEditComponent implements OnInit {
+  user: User = new User();
+  userId: string = '';
 
-  user = new User();
+  constructor(
+    private firebaseService: FirebaseServiceComponent,
+    private route: ActivatedRoute,
+    public dialogRef: MatDialogRef<DialogEditComponent>,
+  ) {}
 
-  constructor(){
-
+  ngOnInit(): void {
   }
 
-  editUser(){}
-
-
-
+  editUser() {
+    this.firebaseService.updateUser(this.user, this.userId);
+  }
 }
