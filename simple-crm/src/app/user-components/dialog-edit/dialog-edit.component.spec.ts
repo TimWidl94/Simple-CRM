@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DialogEditComponent } from './dialog-edit.component';
+import { Firestore } from 'firebase/firestore';
 
 describe('DialogEditComponent', () => {
   let component: DialogEditComponent;
@@ -8,10 +9,11 @@ describe('DialogEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DialogEditComponent]
+      imports: [DialogEditComponent],
+      providers: [Firestore]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(DialogEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
