@@ -1,0 +1,37 @@
+<mat-card>
+  <table class="user-table">
+    <tr>
+      <th>Customer number</th>
+      <th>Lastname/Company</th>
+      <th>Firstname</th>
+      <th>Country</th>
+      <th>ZipCode</th>
+      <th>City</th>
+      <th>Email</th>
+      <th>Telefon</th>
+    </tr>
+    <tr *ngFor="let customer of this.firebaseService.customers" [routerLink]="['/customer/' + customer.id]" routerLinkActive="router-link-active" >
+      <th>{{ customer.customerNumber }}</th>
+      <th>{{ customer.lastName }}</th>
+      <th>{{ customer.firstName }}</th>
+      <th>{{ customer.country }}</th>
+      <th>{{ customer.zipCode }}</th>
+      <th>{{ customer.city }}</th>
+      <th>{{ customer.email }}</th>
+      <th>{{ customer.telefonNumber }}</th>
+    </tr>
+  </table>
+</mat-card>
+
+<div class="add-user-btn">
+  <button
+    mat-fab
+    aria-label="addUserIcon"
+    matTooltip="add Customer"
+    [matTooltipPosition]="'above'"
+    (click)="openDialog()"
+  >
+    <mat-icon>person_add</mat-icon>
+  </button>
+</div>
+

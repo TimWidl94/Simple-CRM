@@ -1,0 +1,65 @@
+<div>
+  <h2 mat-dialog-title>New Date</h2>
+  <mat-dialog-content class="input-field-box">
+    <div class="full-width">
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Date</mat-label>
+        <input
+          [(ngModel)]="date.date"
+          matInput
+          placeholder="Date"
+          [matDatepicker]="picker1"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+        <!-- <mat-hint>Please enter a date</mat-hint> -->
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Select</mat-label>
+      <mat-select [(ngModel)]="selectedOption" (selectionChange)="onSelectionChange($event)">
+        <mat-option value="online">Online Call</mat-option>
+        <mat-option value="personal">Personal meeting</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- <mat-form-field appearance="outline"> -->
+      <!-- <mat-label>Time</mat-label> -->
+      <!-- <input matInput placeholder="Time" /> -->
+    <!-- </mat-form-field> -->
+
+    <mat-form-field>
+      <input matInput
+             name="selected_time_B"
+             [(ngModel)]="date.time"
+             [ngxMatTimepicker]="pickerB"
+             placeholder="16:00"
+             readonly />
+      <mat-icon matSuffix
+                (click)="pickerB.open()">
+      </mat-icon>
+  </mat-form-field>
+  <ngx-mat-timepicker color="accent"
+                      #pickerB></ngx-mat-timepicker>
+
+    <mat-form-field appearance="outline">
+      <mat-label>User</mat-label>
+      <mat-select [formControl]="usersList" multiple [(ngModel)]="date.participant">
+        @for (user of this.firebaseService.users; track user) {
+        <mat-option [value]="user">{{ user.lastName }} {{ user.firstName }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="saveDate()">
+      Create new Date
+    </button>
+  </mat-dialog-actions>
+</div>

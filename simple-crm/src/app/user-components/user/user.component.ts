@@ -34,7 +34,6 @@ export class UserComponent implements OnInit {
   users = this.firebaseService.users;
 
   ngOnInit(): void {
-    console.log(this.firebaseService.users);
   }
 
   openDialog() {

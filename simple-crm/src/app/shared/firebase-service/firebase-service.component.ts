@@ -1,7 +1,15 @@
 import { Component, Injectable, inject } from '@angular/core';
 import { Firestore, query } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
-import { addDoc, collection, doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  onSnapshot,
+  updateDoc,
+} from 'firebase/firestore';
+import { Customer } from '../../../models/customer.class';
+import { Date } from '../../../models/date.class';
 
 @Injectable({
   providedIn: 'root',
@@ -16,15 +24,25 @@ import { addDoc, collection, doc, onSnapshot, updateDoc } from 'firebase/firesto
 export class FirebaseServiceComponent {
   firestore: Firestore = inject(Firestore);
   public users: User[] = [];
+  public customers: Customer[] = [];
+  public dates: Date[] = [];
   unsubUser;
+  unsubCustomer;
+  unsubDate;
 
   constructor() {
     this.unsubUser = this.subUserList();
+    this.unsubCustomer = this.subCustomerList();
+    this.unsubDate = this.subDateList();
   }
 
   ngonDestroy() {
     this.unsubUser();
+    this.unsubCustomer();
+    this.unsubDate;
   }
+
+  //* User *//
 
   getUserJson(user: User) {
     return {
@@ -58,7 +76,7 @@ export class FirebaseServiceComponent {
       list.forEach((element) => {
         this.users.push(this.setUserObject(element.data(), element.id));
       });
-      console.log(this.users);
+      // console.log(this.users);
     });
   }
 
@@ -78,11 +96,11 @@ export class FirebaseServiceComponent {
     }
   }
 
-  getSingleUserRef(colId: string, userId: string){
-    return doc(collection(this.firestore, colId), userId)
+  getSingleUserRef(colId: string, userId: string) {
+    return doc(collection(this.firestore, colId), userId);
   }
 
-  async getUserJsonFromId(user: User){
+  async getUserJsonFromId(user: User) {
     if (user.id) {
       let docRef = this.getSingleUserRef('user', user.id);
       await updateDoc(docRef, this.getUserJson(user))
@@ -102,5 +120,146 @@ export class FirebaseServiceComponent {
         })
         .then(() => {});
     }
+  }
+
+  //* Customer *//
+
+  getSingleCustomerRef(colId: string, customerId: string) {
+    return doc(collection(this.firestore, colId), customerId);
+  }
+
+  getCustomerJson(customer: Customer) {
+    return {
+      firstName: customer.firstName,
+      lastName: customer.lastName,
+      email: customer.email,
+      telefonNumber: customer.telefonNumber,
+      street: customer.street,
+      zipCode: customer.zipCode,
+      city: customer.city,
+      country: customer.country,
+      customerNumber: customer.customerNumber,
+    };
+  }
+
+  async addCustomer(customer: Customer, colId: 'customer') {
+    if (colId == 'customer') {
+      await addDoc(this.getCustomerRef(), customer)
+        .catch((err) => {
+          console.error(err);
+        })
+        .then((docRef) => {
+          console.log('Document written with ID: ', docRef);
+        });
+    }
+  }
+
+  getCustomerRef() {
+    return collection(this.firestore, 'customer');
+  }
+
+  setCustomerObject(obj: any, id: string) {
+    return {
+      id: id || '',
+      customerNumber: obj.customerNumber || '',
+      firstName: obj.firstName || '',
+      lastName: obj.lastName || '',
+      email: obj.email || '',
+      telefonNumber: obj.telefonNumber || '',
+      country: obj.country || '',
+      street: obj.street || '',
+      zipCode: obj.zipCode || '',
+      city: obj.city || '',
+    };
+  }
+
+  subCustomerList() {
+    const q = query(this.getCustomerRef());
+    return onSnapshot(q, (list) => {
+      this.customers = [];
+      list.forEach((element) => {
+        this.customers.push(this.setCustomerObject(element.data(), element.id));
+      });
+      // console.log(this.users);
+    });
+  }
+
+  async updateCustomer(customer: Customer, customerId: string) {
+    if (customerId) {
+      let docRef = this.getSingleCustomerRef('customer', customerId);
+      await updateDoc(docRef, this.getCustomerJson(customer))
+        .catch((err) => {
+          console.log(err);
+        })
+        .then(() => {});
+    }
+  }
+
+  //* Date *//
+
+  getSingleDateRef(colId: string, dateId: string) {
+    return doc(collection(this.firestore, colId), dateId);
+  }
+
+  getDateJson(date: Date) {
+    return {
+      id: date.id,
+      date: date.date,
+      onlineCall: date.onlineCall,
+      time: date.time,
+      paricipant: date.participant,
+    };
+  }
+
+  async addDate(date: Date, colId: 'date') {
+    if (colId == 'date') {
+      await addDoc(this.getDateRef(), date)
+        .catch((err) => {
+          console.error(err);
+        })
+        .then((docRef) => {
+          console.log('Document written with ID: ', docRef);
+        });
+    }
+  }
+
+  getDateRef() {
+    return collection(this.firestore, 'date');
+  }
+
+  setDateObject(obj: any, id: string) {
+    return {
+      id: id || '',
+      date: obj.date || '',
+      onlineCall: obj.onlineCall || true,
+      time: obj.time || '',
+      participant: obj.participant || '',
+    };
+  }
+
+  subDateList() {
+    const q = query(this.getDateRef());
+    return onSnapshot(q, (list) => {
+      this.dates = [];
+      list.forEach((element) => {
+        this.dates.push(this.setDateObject(element.data(), element.id));
+      });
+      console.log('liste der Termine', this.dates[0].participant);
+    });
+  }
+
+  async updateDate(date: Date, dateId: string) {
+    if (dateId) {
+      let docRef = this.getSingleDateRef('date', dateId);
+      await updateDoc(docRef, this.getDateJson(date))
+        .catch((err) => {
+          console.log(err);
+        })
+        .then(() => {});
+    }
+  }
+
+  getDates(): Date[] {
+    return this.dates;
   }
 }
