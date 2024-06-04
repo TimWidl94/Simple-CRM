@@ -253,7 +253,7 @@ export class FirebaseServiceComponent {
         this.dates.push(this.setDateObject(element.data(), element.id));
       });
       this.datesSubject.next(this.dates);
-      console.log('liste der Termine', this.dates);
+      // console.log('liste der Termine', this.dates);
     });
   }
 

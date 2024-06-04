@@ -39,8 +39,7 @@ export class CustomerDetailComponent implements OnInit {
   private datesSubscription: Subscription | null = null;
   customerId: string = '';
   customer: any;
-  dates: any[] = [];
-  nameToCheck: string = '';
+  appointment: any[] = [];
   datesCustomer: string [] = [];
 
   ngOnInit(): void {
@@ -48,9 +47,10 @@ export class CustomerDetailComponent implements OnInit {
     this.getCustomer();
 
     this.datesSubscription = this.firebaseService.dates$.subscribe((dates) => {
-      this.dates = dates;
-      console.log('customer-detail.component', this.dates)
+      this.appointment = dates;
     });
+    // console.log('dates customer',this.datesCustomer)
+    this.getNamesFromDates();
   }
 
   ngOnDestroy(): void {
@@ -68,7 +68,7 @@ export class CustomerDetailComponent implements OnInit {
     this.customer = onSnapshot(docRef, (customerData) => {
       let customer = customerData.data();
       this.customer = new Customer(customer);
-      // console.log('single user Data', this.customer);
+      console.log('single user Data', this.customer);
     });
   }
 
@@ -84,9 +84,11 @@ export class CustomerDetailComponent implements OnInit {
     const dialog = this.dialog.open(DateComponent);
   }
 
-  getDatesFromCustomer() {
-    this.dates.forEach((element) => {
-      this.datesCustomer.push()
-    })
+  getNamesFromDates(){
+    // this.appointment.forEach((element)=> {
+      // if(this.customer.lastName == element.participant){
+      // this.datesCustomer.push(element)}
+    // })
+    console.log('dates Customer after push', this.customer)
   }
 }
