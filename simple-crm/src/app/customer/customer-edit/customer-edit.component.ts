@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FirebaseServiceComponent } from '../../shared/firebase-service/firebase-service.component';
+import { FirebaseServiceComponent } from '../../shared/services/firebase-service/firebase-service.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';

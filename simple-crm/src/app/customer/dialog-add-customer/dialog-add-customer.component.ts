@@ -11,7 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { FirebaseServiceComponent } from '../../shared/firebase-service/firebase-service.component';
+import { FirebaseServiceComponent } from '../../shared/services/firebase-service/firebase-service.component';
 import { Customer } from '../../../models/customer.class';
 
 @Component({

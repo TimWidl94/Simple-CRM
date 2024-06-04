@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { User } from '../../../models/user.class';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
-import { FirebaseServiceComponent } from '../../shared/firebase-service/firebase-service.component';
+import { FirebaseServiceComponent } from '../../shared/services/firebase-service/firebase-service.component';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute } from '@angular/router';
-import { FirebaseServiceComponent } from '../../shared/firebase-service/firebase-service.component';
+import { FirebaseServiceComponent } from '../../shared/services/firebase-service/firebase-service.component';
 import { onSnapshot } from 'firebase/firestore';
 import { User } from '../../../models/user.class';
 import { MatIconModule } from '@angular/material/icon';

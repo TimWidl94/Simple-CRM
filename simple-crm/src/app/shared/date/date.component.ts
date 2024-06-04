@@ -12,7 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Date } from '../../../models/date.class';
-import { FirebaseServiceComponent } from '../firebase-service/firebase-service.component';
+import { FirebaseServiceComponent } from '../services/firebase-service/firebase-service.component';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 
@@ -46,6 +46,7 @@ export class DateComponent implements OnInit {
   date = new Date();
 
   users = this.firebaseService.users;
+  usersLastName = this.getLastNames();
 
   usersList = new FormControl('');
 
@@ -63,5 +64,9 @@ export class DateComponent implements OnInit {
     } else if (event.value === 'personal') {
       this.date.onlineCall = false;
     }
+  }
+
+  getLastNames(){
+
   }
 }

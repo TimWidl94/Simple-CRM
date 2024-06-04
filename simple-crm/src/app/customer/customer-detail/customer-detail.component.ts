@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute } from '@angular/router';
-import { FirebaseServiceComponent } from '../../shared/firebase-service/firebase-service.component';
+import { FirebaseServiceComponent } from '../../shared/services/firebase-service/firebase-service.component';
 import { onSnapshot } from 'firebase/firestore';
 import { Customer } from '../../../models/customer.class';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,6 +11,8 @@ import { DialogEditComponent } from '../../user-components/dialog-edit/dialog-ed
 import { CustomerEditComponent } from '../customer-edit/customer-edit.component';
 import { RouterLink } from '@angular/router';
 import { DateComponent } from '../../shared/date/date.component';
+import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-customer-detail',
@@ -21,6 +23,7 @@ import { DateComponent } from '../../shared/date/date.component';
     MatMenuModule,
     DialogEditComponent,
     RouterLink,
+    CommonModule,
   ],
   providers: [FirebaseServiceComponent],
   templateUrl: './customer-detail.component.html',
@@ -33,15 +36,28 @@ export class CustomerDetailComponent implements OnInit {
     public dialog: MatDialog
   ) {}
 
+  private datesSubscription: Subscription | null = null;
   customerId: string = '';
   customer: any;
-  dates: any;
+  dates: any[] = [];
   nameToCheck: string = '';
+  datesCustomer: string [] = [];
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => (this.customerId = params['id']));
     this.getCustomer();
-    this.getDatesFromCustomer();
+
+    this.datesSubscription = this.firebaseService.dates$.subscribe((dates) => {
+      this.dates = dates;
+      console.log('customer-detail.component', this.dates)
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe to avoid memory leaks
+    if (this.datesSubscription) {
+      this.datesSubscription.unsubscribe();
+    }
   }
 
   getCustomer() {
@@ -52,7 +68,7 @@ export class CustomerDetailComponent implements OnInit {
     this.customer = onSnapshot(docRef, (customerData) => {
       let customer = customerData.data();
       this.customer = new Customer(customer);
-      console.log('single user Data', this.customer);
+      // console.log('single user Data', this.customer);
     });
   }
 
@@ -68,7 +84,9 @@ export class CustomerDetailComponent implements OnInit {
     const dialog = this.dialog.open(DateComponent);
   }
 
-  getDatesFromCustomer(){
-
+  getDatesFromCustomer() {
+    this.dates.forEach((element) => {
+      this.datesCustomer.push()
+    })
   }
 }

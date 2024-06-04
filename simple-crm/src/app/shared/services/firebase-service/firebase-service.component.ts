@@ -1,6 +1,6 @@
 import { Component, Injectable, inject } from '@angular/core';
 import { Firestore, query } from '@angular/fire/firestore';
-import { User } from '../../../models/user.class';
+import { User } from '../../../../models/user.class';
 import {
   addDoc,
   collection,
@@ -8,8 +8,9 @@ import {
   onSnapshot,
   updateDoc,
 } from 'firebase/firestore';
-import { Customer } from '../../../models/customer.class';
-import { Date } from '../../../models/date.class';
+import { Customer } from '../../../../models/customer.class';
+import { Date } from '../../../../models/date.class';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,10 @@ import { Date } from '../../../models/date.class';
 })
 export class FirebaseServiceComponent {
   firestore: Firestore = inject(Firestore);
+
+
+  private datesSubject = new BehaviorSubject<any[]>([]);
+  dates$ = this.datesSubject.asObservable();
   public users: User[] = [];
   public customers: Customer[] = [];
   public dates: Date[] = [];
@@ -207,7 +212,10 @@ export class FirebaseServiceComponent {
       date: date.date,
       onlineCall: date.onlineCall,
       time: date.time,
-      paricipant: date.participant,
+      paricipant: {
+        firstName: date.participant,
+        lastName: date.participant
+      },
     };
   }
 
@@ -244,7 +252,8 @@ export class FirebaseServiceComponent {
       list.forEach((element) => {
         this.dates.push(this.setDateObject(element.data(), element.id));
       });
-      console.log('liste der Termine', this.dates[0].participant);
+      this.datesSubject.next(this.dates);
+      console.log('liste der Termine', this.dates);
     });
   }
 

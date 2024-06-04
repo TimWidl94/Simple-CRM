@@ -64,8 +64,31 @@
     <mat-menu #appointmentMenu="matMenu">
       <button mat-menu-item (click)="newDate()">New Date</button>
     </mat-menu>
-    <mat-card class="termin-card">
-      New Termin
+
+
+    <mat-card class="termin-card" *ngFor="let date of this.firebaseService.dates">
+      <mat-card-header>
+        <mat-card-title>New Termin</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="termin-box">
+        <div class="customer-information">
+          <span><b>Date:</b></span>
+          <span><b>Time:</b></span>
+          <span><b>Participant:</b></span>
+          <span><b>Meeting type:</b></span>
+        </div>
+
+        <div class="customer-information">
+          <span>{{ date.date }}</span>
+          <span>{{ date.time }}</span>
+          <span>{{ date.participant }}</span>
+          <span *ngIf="date.onlineCall">Online Call</span>
+          <span *ngIf="!date.onlineCall">Personal meeting</span>
+        </div>
+      </mat-card-content>
     </mat-card>
+
+
+
   </mat-card>
 </div>
